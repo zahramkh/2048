@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DataClass
 {
-
+    //test
     public int x;
     public int y;
 
