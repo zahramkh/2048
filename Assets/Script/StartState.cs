@@ -4,6 +4,7 @@ using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class StartState : BaseState
@@ -128,7 +129,8 @@ public class StartState : BaseState
             gameManager.dataGrid[randomPosition.x, randomPosition.y].number.curentPosition = currentPosition;
         }
 
-        
+
+
     }
 
 

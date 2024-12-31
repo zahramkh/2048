@@ -107,32 +107,26 @@ public class ProcessState : BaseState
         if (gameManager.dataGrid[x, y].number != null)
         { 
             int curentNumber = gameManager.dataGrid[x, y].number.value;
-            Vector2 currentPos = gameManager.dataGrid[x, y].number.transform.position;
+            Vector2 currentPos = new Vector2(x,y);
+
             if (LastNumber == 0)
             {
                 LastNumber = curentNumber;
             }
             else if (LastNumber == curentNumber)
             {
-                //int mergenumber = curentNumber * 2;
-                //gameManager.dataGrid[x, y].number.SetNumber(mergenumber);
-                //GameObject.Destroy(gameManager.dataGrid[x, y].number.gameObject);
-                //gameManager.dataGrid[x, y].number=null;
-
-                //MoveCount++;
+                MoveCount++;
                 LastNumber = 0;
+
             }
             else
             {
                 LastNumber = curentNumber;
             }
-            if (gameManager.dataGrid[x,y].number != null)
-            {
+          
                 gameManager.dataGrid[x, y].number.NumberMove = new Vector2(MoveCount, 0);
-                Debug.Log($"-- {gameManager.dataGrid[x, y].number.NumberMove.x}");
-
                 gameManager.dataGrid[x, y].number.Move(gameManager);
-            }
+            
 
         }
         else 
@@ -153,7 +147,7 @@ public class ProcessState : BaseState
             }
             else if (LastNumber == curentNumber)
             {
-                //MoveCount++;
+                MoveCount++;
                 LastNumber = 0;
             }
             else
@@ -161,13 +155,10 @@ public class ProcessState : BaseState
                 LastNumber = curentNumber;
             }
 
-            if (gameManager.dataGrid[x, y].number != null)
-            {
+        
                 gameManager.dataGrid[x, y].number.NumberMove = new Vector2(0, MoveCount);
-                Debug.Log($"-- {gameManager.dataGrid[x, y].number.NumberMove.x}");
-
                 gameManager.dataGrid[x, y].number.Move(gameManager);
-            };
+            
         }
         else
         {
