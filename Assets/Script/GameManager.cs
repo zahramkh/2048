@@ -144,6 +144,18 @@ public class GameManager : MonoBehaviour
             scoretext.text = "" + score;
         }
     }
+
+    public void PrintGrid(GameManager gameManager)
+    {
+        for (int x = 1; x < gameManager.gridSizeX; x++)
+        {
+            for (int y = 1; y < gameManager.gridSizeY; y++)
+            {
+                if (gameManager.dataGrid[x, y].number != null)
+                    Debug.Log($"Tile at ({x}, {y}): {gameManager.dataGrid[x, y].number.value}");
+            }
+        }
+    }
 }
 
 

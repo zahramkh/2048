@@ -12,6 +12,7 @@ public class Number : MonoBehaviour
     public Color color;
     public Vector3 NumberMove;
     public Vector2 curentPosition;
+    public Vector2 curentPositionMerge;
     private SpriteRenderer spriteRenderer;
     [SerializeField]
     private TextMeshPro textmesh;
@@ -19,6 +20,7 @@ public class Number : MonoBehaviour
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
     }
     public void SetNumber(int newValue)
     {
@@ -43,9 +45,11 @@ public class Number : MonoBehaviour
 
         if (targetPosition != Vector3.zero)
         {
-            HandelMoveAndMerg(gameManager, targetPosition);
+            HandelMoveAndMerg(gameManager, new Vector3Int((int)targetPosition.x,(int)targetPosition.y));
         }
         NumberMove = Vector3.zero;
+
+       
     }
     private Vector3 CalcuTargetPoz(GameManager gameManager)
     {
@@ -71,8 +75,8 @@ public class Number : MonoBehaviour
             targetY -= Mathf.RoundToInt(NumberMove.y);
         }
 
-        if (targetX >=0 && targetX<gameManager.gridSizeX 
-            && targetY >=0 && targetY < gameManager.gridSizeY)
+        if (targetX >=1 && targetX<gameManager.gridSizeX 
+            && targetY >=1 && targetY < gameManager.gridSizeY)
         {
             return new Vector3(targetX, targetY);
         }
@@ -80,37 +84,34 @@ public class Number : MonoBehaviour
 
     }
 
-    public void HandelMoveAndMerg(GameManager gameManager , Vector3 targetPosition)
+    public void HandelMoveAndMerg(GameManager gameManager, Vector3Int targetIndex)
     {
-        int targetX = Mathf.RoundToInt(targetPosition.x);
-        int targetY = Mathf.RoundToInt(targetPosition.y);
+        Debug.LogError(targetIndex,this.gameObject);
 
         int currentX = Mathf.RoundToInt(curentPosition.x);
         int currentY = Mathf.RoundToInt(curentPosition.y);
 
+        Vector3 targetpozition = gameManager.dataGrid[targetIndex.x, targetIndex.y].basePrefab.transform.position;
 
-        Number targetNumber = gameManager.dataGrid[targetX, targetY].number;
-        Number currenNumber = gameManager.dataGrid[currentX, currentY].number;
-      
-            gameManager.hasMoved = true;
-            Vector3 targetpozition = gameManager.dataGrid[targetX, targetY].basePrefab.transform.position;
-            GameManager.instance.movingObjects.Add(this.gameObject.GetInstanceID());
-            Debug.Log("add" + GameManager.instance.movingObjects);
+        GameManager.instance.movingObjects.Add(this.gameObject.GetInstanceID());
+
+        gameManager.dataGrid[currentX, currentY].number = null;
 
             LeanTween.move(gameObject, targetpozition, 0.2f).setOnComplete(() =>
             {
-                gameManager.dataGrid[currentX, currentY].number = null;
-                gameManager.dataGrid[targetX, targetY].number = this;
-                curentPosition = new Vector2(targetX, targetY);
+                Number targetNumber = gameManager.dataGrid[targetIndex.x, targetIndex.y].number;
+                GameManager.instance.hasMoved = true;
+                if (targetNumber != null)
+                {
+                    Destroy(targetNumber.gameObject);
+                    SetNumber(value * 2);
+                }
+                gameManager.dataGrid[targetIndex.x, targetIndex.y].number = this;
+                curentPosition = new Vector2(targetIndex.x, targetIndex.y);
+
                 GameManager.instance.movingObjects.Remove(this.gameObject.GetInstanceID());
-                Debug.Log("remove " + GameManager.instance.movingObjects);
             });
-
-      
-
     }
-
-   
 
     private Color GetColorForValue(int value)
     {
@@ -127,4 +128,7 @@ public class Number : MonoBehaviour
             default: return Color.white;
         }
     }
+
+   
+
 }
