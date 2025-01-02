@@ -143,9 +143,9 @@ public class GameManager : MonoBehaviour
     public void Reset()
     {
        
-        for (int x = 0; x < gridSizeX; x++)
+        for (int x = 1; x < gridSizeX; x++)
         {
-            for (int y = 0; y < gridSizeY; y++)
+            for (int y = 1; y < gridSizeY; y++)
             {
                 if (dataGrid[x, y].number != null)
                 {
