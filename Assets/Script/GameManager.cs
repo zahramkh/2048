@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
         {
             for (int y = 0; y < gridSizeY; y++)
             {
-                if (dataGrid[x, y].number.gameObject != null)
+                if (dataGrid[x, y].number != null)
                 {
 
                     Destroy(dataGrid[x, y].number.gameObject);
@@ -155,6 +155,7 @@ public class GameManager : MonoBehaviour
 
 
                 }
+               
             }
         }
         startState.SpawnTile(this);
