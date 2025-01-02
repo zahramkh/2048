@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using static GameManager;
 using static UnityEngine.GraphicsBuffer;
 
@@ -16,7 +17,7 @@ public class Number : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     [SerializeField]
     private TextMeshPro textmesh;
-
+    public int scoreValue;
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -86,7 +87,7 @@ public class Number : MonoBehaviour
 
     public void HandelMoveAndMerg(GameManager gameManager, Vector3Int targetIndex)
     {
-        Debug.LogError(targetIndex,this.gameObject);
+        //Debug.LogError(targetIndex,this.gameObject);
 
         int currentX = Mathf.RoundToInt(curentPosition.x);
         int currentY = Mathf.RoundToInt(curentPosition.y);
@@ -104,7 +105,10 @@ public class Number : MonoBehaviour
                 if (targetNumber != null)
                 {
                     Destroy(targetNumber.gameObject);
-                    SetNumber(value * 2);
+                    scoreValue=(value * 2);
+                    SetNumber(scoreValue);
+                    gameManager.score += scoreValue;
+
                 }
                 gameManager.dataGrid[targetIndex.x, targetIndex.y].number = this;
                 curentPosition = new Vector2(targetIndex.x, targetIndex.y);
