@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-public class Panel_Lose : Panel
+public class Panel_Lose : Popup
 {
     [SerializeField] private TextMeshProUGUI textlose;
     [SerializeField] private TextMeshProUGUI score;

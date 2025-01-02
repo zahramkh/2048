@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     private BaseState currentState;
     //Other Script
     public InputState inputState;
+    public LoseState loseState;
     public StartState startState;
     public MoveState moveState;
     public DataClass dataClass;
@@ -93,6 +94,7 @@ public class GameManager : MonoBehaviour
         moveState = new MoveState();
         dataClass = new DataClass();
         processState = new ProcessState();
+        loseState = new LoseState();    
         startState = new StartState(squarePrefab, TileNumberPrefab, gridSizeX, gridSizeY, distance, this.transform );
 
         if (startState == null)

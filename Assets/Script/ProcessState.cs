@@ -43,7 +43,12 @@ public class ProcessState : BaseState
     {
         if (GameManager.instance.movingObjects.Count == 0)
         {
-            gameManager.ChangeState(gameManager.inputState);
+            if(gameManager.loseState.CheckLoseCondition(gameManager))
+            {
+                Debug.Log("you lose");
+                gameManager.LosePanel();
+            }
+            gameManager.ChangeState(gameManager.inputState);    
         }
     }
     public void ProcessRight(GameManager gameManager)
@@ -132,8 +137,9 @@ public class ProcessState : BaseState
         else 
         {
             MoveCount++;
-
         }
+
+      
     }
     public void ManageProcessY(GameManager gameManager, int x, int y, ref int LastNumber, ref int MoveCount)
     {

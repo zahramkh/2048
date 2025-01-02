@@ -6,7 +6,7 @@ using UnityEngine.AddressableAssets;
 public class MainMenu : Panel
 {
     public string sceneGame = "sceneGame";
- 
+
     public void PlayGame()
     {
         Addressables.LoadSceneAsync(sceneGame);

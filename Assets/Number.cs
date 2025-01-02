@@ -101,15 +101,18 @@ public class Number : MonoBehaviour
             LeanTween.move(gameObject, targetpozition, 0.2f).setOnComplete(() =>
             {
                 Number targetNumber = gameManager.dataGrid[targetIndex.x, targetIndex.y].number;
-                GameManager.instance.hasMoved = true;
                 if (targetNumber != null)
                 {
                     Destroy(targetNumber.gameObject);
                     scoreValue=(value * 2);
                     SetNumber(scoreValue);
                     gameManager.score += scoreValue;
-
+                    GameManager.instance.hasMoved = true;
+                }else if(currentX!=targetIndex.x || currentY!=targetIndex.y)
+                {
+                    GameManager.instance.hasMoved = true;
                 }
+
                 gameManager.dataGrid[targetIndex.x, targetIndex.y].number = this;
                 curentPosition = new Vector2(targetIndex.x, targetIndex.y);
 
@@ -133,6 +136,6 @@ public class Number : MonoBehaviour
         }
     }
 
-   
+    
 
 }
