@@ -3,20 +3,47 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
 
     public List<int> movingObjects = new List<int>();
+
     public static GameManager instance;
+
     private void Awake()
     {
         if (instance == null)
+        {
             instance = this;
+            DontDestroyOnLoad(this); 
+        }
         else
-            Destroy(this.gameObject);
+        {
+            Destroy(this.gameObject); 
+        }
     }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Test")
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     public bool hasMoved = false;
 
     private BaseState currentState;
@@ -79,7 +106,8 @@ public class GameManager : MonoBehaviour
 
         highscore = PlayerPrefs.GetInt("High score", 0);
         UpdateHighScre();
-      
+       
+
     }
 
     void Update()
@@ -91,6 +119,8 @@ public class GameManager : MonoBehaviour
         }
 
         currentState.UpdateState(this);
+        //int scoreForScene = score;
+        scoretext.text = score.ToString();
     }
 
     public void ChangeState(BaseState newState)
@@ -117,7 +147,7 @@ public class GameManager : MonoBehaviour
         {
             for (int y = 0; y < gridSizeY; y++)
             {
-                if (dataGrid[x, y].number != null)
+                if (dataGrid[x, y].number.gameObject != null)
                 {
 
                     Destroy(dataGrid[x, y].number.gameObject);
@@ -145,17 +175,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PrintGrid(GameManager gameManager)
+    public void WinPanel()
     {
-        for (int x = 1; x < gameManager.gridSizeX; x++)
-        {
-            for (int y = 1; y < gameManager.gridSizeY; y++)
-            {
-                if (gameManager.dataGrid[x, y].number != null)
-                    Debug.Log($"Tile at ({x}, {y}): {gameManager.dataGrid[x, y].number.value}");
-            }
-        }
+        int scoree = score;
+        string teaxtscore = "score : " + score;
+        ClientCoordinator.Instance.OpenOverlay<Panel_Win>().Setup("You Win", teaxtscore);
     }
+    public void LosePanel()
+    {
+        int scoree = score;
+        string teaxtscore = "score : " + score;
+        ClientCoordinator.Instance.OpenOverlay<Panel_Lose>().Setup("You Lose", teaxtscore);
+    }
+
 }
 
 
