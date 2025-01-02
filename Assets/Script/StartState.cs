@@ -97,8 +97,9 @@ public class StartState : BaseState
             {
                 if (gameManager.dataGrid[x, y].number == null) 
                 {
-                    emptyPositions.Add(new Vector2Int(x, y)); 
+                    emptyPositions.Add(new Vector2Int(x, y));
                 }
+                
             }
         }
 
