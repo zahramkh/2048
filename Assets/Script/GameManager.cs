@@ -1,18 +1,18 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
-
     public List<int> movingObjects = new List<int>();
 
     public static GameManager instance;
-
     private void Awake()
     {
         if (instance == null)
@@ -24,10 +24,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject); 
         }
+
+       
     }
 
     private void OnEnable()
-    {
+    {      
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -56,6 +58,7 @@ public class GameManager : MonoBehaviour
     public ProcessState processState;
     public Base squarePrefab;
     public Number TileNumberPrefab;
+    public Timer timer;
     //public UiTween uiTween;
 
     //About Score And HighScore
@@ -69,13 +72,7 @@ public class GameManager : MonoBehaviour
     public float distance = 1.1f;
     // Shared DataClass grid for all states
     public DataClass[,] dataGrid; 
-    //Panel Lose
-    public GameObject panelLose;
     public int moveCount;
-
-    public bool horizontal = false;
-    public bool vertical = false;
-
 
     public enum playerInput
     {
@@ -89,7 +86,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         dataGrid = new DataClass[gridSizeX , gridSizeY];
-        Debug.Log("Initializing states...");
+        //Debug.Log("Initializing states...");
         inputState = new InputState();
         moveState = new MoveState();
         dataClass = new DataClass();
@@ -99,29 +96,23 @@ public class GameManager : MonoBehaviour
 
         if (startState == null)
         {
-            Debug.LogError("StartState initialization failed!");
             return;
         }
 
         currentState = startState;
         currentState.EnterState(this);
-
-        highscore = PlayerPrefs.GetInt("High score", 0);
-        UpdateHighScre();
-       
-
+        highscore = PlayerPrefs.GetInt("HighScore", 0);
+        highscoretext.text = "" + highscore;     
     }
 
     void Update()
     {
         if (currentState == null)
         {
-            Debug.LogError("Current state is null in Update!");
             return;
         }
 
         currentState.UpdateState(this);
-        //int scoreForScene = score;
         scoretext.text = score.ToString();
     }
 
@@ -129,7 +120,6 @@ public class GameManager : MonoBehaviour
     {
         if (newState == null)
         {
-            Debug.LogError("Attempting to change to a null state!");
             return;
         }
 
@@ -163,16 +153,27 @@ public class GameManager : MonoBehaviour
         startState.SpawnTile(this);
         startState.SpawnTile(this);
         UpdateHighScre();
+       timer.elapsedTime = 0;
+        timer.isRunning=true;
+
     }
+
 
     public void UpdateHighScre()
     {
-        if (score > highscore)
+        int saveHighScore = PlayerPrefs.GetInt("HighScore", 0);
+        if (score > saveHighScore)
         {
+            PlayerPrefs.SetInt("HighScore", score);
+            PlayerPrefs.Save();
             highscore = score;
+            highscoretext.text =" " + highscore;
 
-            highscoretext.text ="" + highscore;
-
+            score = 0;
+            scoretext.text = "" + score;
+        }
+        else
+        {
             score = 0;
             scoretext.text = "" + score;
         }

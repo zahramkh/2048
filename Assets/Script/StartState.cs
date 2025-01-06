@@ -26,7 +26,7 @@ public class StartState : BaseState
 
     public int gridSizeX;
     public int gridSizeY;
-    public float distance = 1.1f;
+    public float distance = 1.5f;
     public GameManager gameManager;
     public StartState(Base squarePrefab , Number TileNumberPrefab, int gridSizeX, int gridSizeY, float distance, UnityEngine.Transform parentTransform )
     {
@@ -42,7 +42,7 @@ public class StartState : BaseState
 
     public override void EnterState(GameManager gameManager)
     {
-        Debug.Log("Enter State");
+        //Debug.Log("Enter State");
         CreateGrid(gameManager);
         SpawnTile(gameManager);
         SpawnTile(gameManager);
@@ -59,7 +59,7 @@ public class StartState : BaseState
     }
     //--------------------------------------------------------------------
     //Creating Grid
-    public void CreateGrid(GameManager gameManager )
+    public void CreateGrid(GameManager gameManager)
     {
         // Initialize the 2D grid array and columns list
         gridArray = new GameObject[gridSizeX, gridSizeY];
@@ -74,7 +74,7 @@ public class StartState : BaseState
             for (int x = 1; x < gridSizeY; x++)
             {
                 // Calculate the position of the grid square
-                Vector3 squarePosition = new Vector3(x * distance, y * distance - midInScreen, 0);
+                Vector3 squarePosition = new Vector3(x * distance - midInScreen - 0.76f, y * distance - midInScreen - 1.0f, 0);
 
                 // Instantiate the grid square
                 square = GameObject.Instantiate(squarePrefab.gameObject, squarePosition, Quaternion.identity, parentTransform);
@@ -82,11 +82,10 @@ public class StartState : BaseState
                 // Store the square in the 2D array
                 gameManager.dataGrid[x, y] = new DataClass();
                 gameManager.dataGrid[x, y].basePrefab = square.GetComponent<Base>();
-              
+
             }
         }
     }
-    
     public void SpawnTile(GameManager gameManager)
     {
         List<Vector2Int> emptyPositions = new List<Vector2Int>();
@@ -95,11 +94,11 @@ public class StartState : BaseState
         {
             for (int y = 1; y < gameManager.gridSizeY; y++)
             {
-                if (gameManager.dataGrid[x, y].number == null) 
+                if (gameManager.dataGrid[x, y].number == null)
                 {
                     emptyPositions.Add(new Vector2Int(x, y));
                 }
-                
+
             }
         }
 
@@ -115,7 +114,10 @@ public class StartState : BaseState
             Vector2Int randomPosition = emptyPositions[Random.Range(0, emptyPositions.Count)];
 
             // 
-            Vector3 tilePosition = new Vector3(randomPosition.x * gameManager.distance, randomPosition.y * gameManager.distance - ((gameManager.gridSizeY - 1) * gameManager.distance / 2), 0);
+            Vector3 tilePosition = new Vector3(
+                randomPosition.x * gameManager.distance - ((gameManager.gridSizeX - 1) * gameManager.distance / 2) - 0.76f,
+                randomPosition.y * gameManager.distance - ((gameManager.gridSizeY - 1) * gameManager.distance / 2) - 1.0f, 
+                0);
             GameObject tile = GameObject.Instantiate(gameManager.TileNumberPrefab.gameObject, tilePosition, Quaternion.identity, parentTransform);
 
             // 
@@ -134,7 +136,36 @@ public class StartState : BaseState
 
     }
 
+    //public void CreateGrid(GameManager gameManager)
+    //{
+    //    // Initialize the 2D grid array and columns list
+    //    gridArray = new GameObject[gridSizeX, gridSizeY];
+    //    gameManager.dataGrid = new DataClass[gridSizeX, gridSizeY];
 
+    //    Vector3 cameraPos = Camera.main.transform.position;
+
+    //    float offsetX = (gridSizeX - 1) * distance / 2;
+    //    float offsetY = (gridSizeY - 1) * distance / 2;
+    //    Vector3 gridCenter = new Vector3(cameraPos.x, cameraPos.y, 0);
+
+    //    for (int y = 1; y < gridSizeX; y++)
+    //    {
+    //        // Create a new list for each column
+    //        for (int x = 1; x < gridSizeY; x++)
+    //        {
+    //            // Calculate the position of the grid square
+    //            Vector3 squarePosition = new Vector3(
+    //                gridCenter.x - offsetX + x * distance,
+    //                gridCenter.y - offsetY + y * distance,
+    //                0);
+
+    //            square = GameObject.Instantiate(squarePrefab.gameObject, squarePosition, Quaternion.identity, parentTransform);
+    //            // Store the square in the 2D array
+    //            gameManager.dataGrid[x, y] = new DataClass();
+    //            gameManager.dataGrid[x, y].basePrefab = square.GetComponent<Base>();
+    //        }
+    //    }
+    //}
 
 }
 

@@ -1,0 +1,61 @@
+  {
+    "collection": "version_control",
+    "key": "version_data",
+    "permission_read": 2,
+    "permission_write": 0,
+    "user_id": "00000000-0000-0000-0000-000000000000",
+    "value": {
+      "last_version": 19,
+      "support_version": 19,
+      "obsolete_versions": [
+        {
+          "version": 5,
+          "is_forced": false
+        },
+        {
+          "version": 6,
+          "is_forced": true
+        },
+        {
+          "version": 7,
+          "is_forced": true
+        },
+        {
+          "version": 8,
+          "is_forced": true
+        },
+        {
+          "version": 9,
+          "is_forced": false
+        },
+        {
+          "version": 19,
+          "is_forced": false
+        },
+        {
+          "version": 20,
+          "is_forced": true
+        },
+        {
+          "version": 21,
+          "is_forced": true
+        },
+        {
+          "version": 22,
+          "is_forced": true
+        },
+        {
+          "version": 23,
+          "is_forced": true
+        },
+        {
+          "version": 24,
+          "is_forced": true
+        },
+        {
+          "version": 25,
+          "is_forced": false
+        }
+      ]
+    }
+  }

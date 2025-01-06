@@ -17,12 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 40b829eabea94694c8c7072a2f03aea6
   m_SerializeEntries:
-  - m_GUID: 3896fc36e5bc42049802e647586b4307
-    m_Address: Assets/Prefab/Circle.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - MyCube
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d6843cbb04b2faa4a9398af9d3541368
     m_Address: Assets/Sprite/wolf.jpg
     m_ReadOnly: 0

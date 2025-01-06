@@ -45,8 +45,9 @@ public class ProcessState : BaseState
         {
             if(gameManager.loseState.CheckLoseCondition(gameManager))
             {
-                Debug.Log("you lose");
-                gameManager.LosePanel();
+                gameManager.ChangeState(gameManager.loseState);
+
+                //gameManager.LosePanel();
             }
             gameManager.ChangeState(gameManager.inputState);    
         }

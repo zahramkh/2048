@@ -7,7 +7,8 @@ public class LoseState : BaseState
 {
     public override void EnterState(GameManager gameManager)
     {
-
+        gameManager.LosePanel();
+        gameManager.timer.StopTimer();
     }
     public override void ExitState(GameManager gameManager)
     {
