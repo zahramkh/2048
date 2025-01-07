@@ -132,7 +132,8 @@ public class Number : MonoBehaviour
             case 64: return Color.black;
             case 128: return Color.black;
             case 256: return Color.black;
-            default: return Color.white;
+            default: return new Color(202f / 255f, 156f / 255f, 123f / 255f);
+;
         }
     }
 

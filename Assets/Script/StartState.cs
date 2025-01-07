@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
@@ -126,7 +127,8 @@ public class StartState : BaseState
 
             TextMeshPro textComponent = tile.GetComponentInChildren<TextMeshPro>();
             int value = UnityEngine.Random.Range(0f, 1f) < 0.9f ? 2 : 4;
-            textComponent.text = value.ToString();
+            //textComponent.text = value.ToString();
+            gameManager.TileNumberPrefab.SetNumber(value);
             gameManager.dataGrid[randomPosition.x, randomPosition.y].number.SetNumber(value);
             Vector2 currentPosition = new Vector2(randomPosition.x, randomPosition.y);
             gameManager.dataGrid[randomPosition.x, randomPosition.y].number.curentPosition = currentPosition;
